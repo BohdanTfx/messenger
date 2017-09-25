@@ -1,6 +1,6 @@
 package com.epam.messenger.message.manager.service;
 
-import com.epam.mentorship.common.model.Message;
+import com.epam.messenger.common.model.Message;
 
 public interface MessageService {
 	Message read(Long id);

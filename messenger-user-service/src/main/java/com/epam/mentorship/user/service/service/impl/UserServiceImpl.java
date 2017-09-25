@@ -3,9 +3,9 @@ package com.epam.mentorship.user.service.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.epam.mentorship.common.model.User;
 import com.epam.mentorship.user.service.dao.UserDao;
 import com.epam.mentorship.user.service.service.UserService;
+import com.epam.messenger.common.model.User;
 
 @Service
 public class UserServiceImpl implements UserService {

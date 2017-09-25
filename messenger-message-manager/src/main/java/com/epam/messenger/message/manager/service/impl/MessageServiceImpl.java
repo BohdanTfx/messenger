@@ -3,7 +3,7 @@ package com.epam.messenger.message.manager.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.epam.mentorship.common.model.Message;
+import com.epam.messenger.common.model.Message;
 import com.epam.messenger.message.manager.dao.MessageDao;
 import com.epam.messenger.message.manager.service.MessageService;
 

@@ -1,9 +1,11 @@
-package com.epam.mentorship.common.model;
+package com.epam.messenger.common.model;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -15,6 +17,8 @@ public class Message implements Serializable {
 
     private static final long serialVersionUID = -2746316451319829735L;
 
+    @Id
+    @GeneratedValue
     private Long id;
     private Date createdDate;
     private String text;
