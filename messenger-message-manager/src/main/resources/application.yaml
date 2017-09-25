@@ -1,13 +1,8 @@
 server:
   port: 8090
-
 spring:
-  datasource:
-    username: root
-    password: root
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost/messenger
-    
-  jpa:
-    hibernate:
-      ddl-auto: update
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: messenger-message

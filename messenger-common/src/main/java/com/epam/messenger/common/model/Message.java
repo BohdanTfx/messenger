@@ -23,6 +23,8 @@ public class Message implements Serializable {
     private Long id;
     private Date createdDate;
     private String text;
+    private User author;
+    private Conversation conversation;
 
     @PrePersist
     public void preSave() {

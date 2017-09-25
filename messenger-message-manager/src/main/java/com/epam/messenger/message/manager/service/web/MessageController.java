@@ -2,11 +2,12 @@ package com.epam.messenger.message.manager.service.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.epam.messenger.common.dto.MessageDTO;
 import com.epam.messenger.common.model.Message;
 import com.epam.messenger.message.manager.service.MessageService;
 
@@ -23,9 +24,8 @@ public class MessageController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Message saveMessage(@RequestParam String text, @RequestParam Long userId) {
+    public Message saveMessage(@RequestBody MessageDTO messageDTO) {
 	Message message = new Message();
-	message.setText(text);
 	return messageService.save(message);
     }
 }
