@@ -1,5 +1,7 @@
 package com.epam.messenger.message.manager.service.impl;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +25,12 @@ public class MessageServiceImpl implements MessageService {
 
 	@Override
 	public Message save(Message message) {
+		Date now = new Date();
 		if (message.getId() == null) {
 			message.setId(sequenceDao.getNextSequenceId());
+			message.setCreateDate(now);
 		}
+		message.setUpdateDate(now);
 		return messageDao.save(message);
 	}
 

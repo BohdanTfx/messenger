@@ -1,4 +1,4 @@
-package com.epam.messenger.message.manager.service.config;
+package com.epam.messenger.message.manager.config;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
