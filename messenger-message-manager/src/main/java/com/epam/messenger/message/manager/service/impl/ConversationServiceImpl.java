@@ -10,12 +10,12 @@ import com.epam.messenger.message.manager.service.ConversationService;
 @Service
 public class ConversationServiceImpl implements ConversationService {
 
-	@Autowired
-	private ConversationDao conversationDao;
+    @Autowired
+    private ConversationDao conversationDao;
 
-	@Override
-	public Conversation get(Long id) {
-		return conversationDao.findOne(id);
-	}
+    @Override
+    public Conversation get(Long id) {
+	return conversationDao.findOne(id);
+    }
 
 }

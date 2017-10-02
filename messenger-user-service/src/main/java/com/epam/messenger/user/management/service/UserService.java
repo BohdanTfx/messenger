@@ -1,4 +1,4 @@
-package com.epam.mentorship.user.service.service;
+package com.epam.messenger.user.management.service;
 
 import com.epam.messenger.common.model.User;
 

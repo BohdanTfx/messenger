@@ -1,4 +1,4 @@
-package com.epam.mentorship.user.service.dao;
+package com.epam.messenger.user.management.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
