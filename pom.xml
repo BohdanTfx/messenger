@@ -26,6 +26,7 @@
     <module>messenger-user-service</module>
     <module>messenger-message-manager</module>
     <module>messenger-compositor</module>
+    <module>messenger-discovery-service</module>
   </modules>
 
   <dependencyManagement>
