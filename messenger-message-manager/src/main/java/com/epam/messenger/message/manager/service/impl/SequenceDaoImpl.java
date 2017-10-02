@@ -17,37 +17,37 @@ import com.epam.messenger.message.manager.exception.SequenceException;
 @Repository
 public class SequenceDaoImpl implements SequenceDao {
 
-	private static final String DEFAULT_SEQUENCE_ID = "default_sequence";
-	@Autowired
-	private MongoOperations mongoOperation;
+  private static final String DEFAULT_SEQUENCE_ID = "default_sequence";
+  @Autowired
+  private MongoOperations mongoOperation;
 
-	@PostConstruct
-	public void initSequence() {
-		if (!mongoOperation.collectionExists(SequenceId.class)) {
-			mongoOperation.createCollection(SequenceId.class);
-			SequenceId sequenceId = new SequenceId();
-			sequenceId.setId(DEFAULT_SEQUENCE_ID);
-			mongoOperation.save(sequenceId);
-		}
-	}
+  @PostConstruct
+  public void initSequence() {
+    if (!mongoOperation.collectionExists(SequenceId.class)) {
+      mongoOperation.createCollection(SequenceId.class);
+      SequenceId sequenceId = new SequenceId();
+      sequenceId.setId(DEFAULT_SEQUENCE_ID);
+      mongoOperation.save(sequenceId);
+    }
+  }
 
-	@Override
-	public long getNextSequenceId() throws SequenceException {
-		Query query = new Query(Criteria.where("_id").is(DEFAULT_SEQUENCE_ID));
+  @Override
+  public long getNextSequenceId() throws SequenceException {
+    Query query = new Query(Criteria.where("_id").is(DEFAULT_SEQUENCE_ID));
 
-		Update update = new Update();
-		update.inc("seq", 1);
+    Update update = new Update();
+    update.inc("seq", 1);
 
-		FindAndModifyOptions options = new FindAndModifyOptions();
-		options.returnNew(true);
+    FindAndModifyOptions options = new FindAndModifyOptions();
+    options.returnNew(true);
 
-		SequenceId seqId = mongoOperation.findAndModify(query, update, options, SequenceId.class);
+    SequenceId seqId = mongoOperation.findAndModify(query, update, options, SequenceId.class);
 
-		if (seqId == null) {
-			throw new SequenceException("Unable to get sequence id for key : " + DEFAULT_SEQUENCE_ID);
-		}
+    if (seqId == null) {
+      throw new SequenceException("Unable to get sequence id for key : " + DEFAULT_SEQUENCE_ID);
+    }
 
-		return seqId.getSeq();
-	}
+    return seqId.getSeq();
+  }
 
 }

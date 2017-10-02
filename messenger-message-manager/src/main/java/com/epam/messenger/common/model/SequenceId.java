@@ -9,8 +9,8 @@ import lombok.Data;
 @Document(collection = "SequenceId")
 public class SequenceId {
 
-	@Id
-	private String id;
-	private long seq;
+  @Id
+  private String id;
+  private long seq;
 
 }

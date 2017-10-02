@@ -4,6 +4,6 @@ import com.epam.messenger.message.manager.exception.SequenceException;
 
 public interface SequenceDao {
 
-	long getNextSequenceId() throws SequenceException;
+  long getNextSequenceId() throws SequenceException;
 
 }

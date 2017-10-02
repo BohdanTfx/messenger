@@ -13,25 +13,25 @@ import com.epam.messenger.message.manager.service.MessageService;
 @Service
 public class MessageServiceImpl implements MessageService {
 
-	@Autowired
-	private MessageDao messageDao;
-	@Autowired
-	private SequenceDao sequenceDao;
+  @Autowired
+  private MessageDao messageDao;
+  @Autowired
+  private SequenceDao sequenceDao;
 
-	@Override
-	public Message read(Long id) {
-		return messageDao.findOne(id);
-	}
+  @Override
+  public Message read(Long id) {
+    return messageDao.findOne(id);
+  }
 
-	@Override
-	public Message save(Message message) {
-		Date now = new Date();
-		if (message.getId() == null) {
-			message.setId(sequenceDao.getNextSequenceId());
-			message.setCreateDate(now);
-		}
-		message.setUpdateDate(now);
-		return messageDao.save(message);
-	}
+  @Override
+  public Message save(Message message) {
+    Date now = new Date();
+    if (message.getId() == null) {
+      message.setId(sequenceDao.getNextSequenceId());
+      message.setCreateDate(now);
+    }
+    message.setUpdateDate(now);
+    return messageDao.save(message);
+  }
 
 }

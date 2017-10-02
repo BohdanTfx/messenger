@@ -16,16 +16,16 @@ import com.epam.messenger.message.manager.service.MessageService;
 @RequestMapping("message")
 public class MessageController {
 
-    @Autowired
-    private MessageService messageService;
+  @Autowired
+  private MessageService messageService;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Message readMessage(@PathVariable Long id) {
-	return messageService.read(id);
-    }
+  @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+  public Message readMessage(@PathVariable Long id) {
+    return messageService.read(id);
+  }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public Message saveMessage(@RequestBody MessageDTO messageDTO) {
-	return messageService.save(MessageTransformer.toMessage(messageDTO));
-    }
+  @RequestMapping(method = RequestMethod.POST)
+  public Message saveMessage(@RequestBody MessageDTO messageDTO) {
+    return messageService.save(MessageTransformer.toMessage(messageDTO));
+  }
 }

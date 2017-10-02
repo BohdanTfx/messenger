@@ -10,17 +10,17 @@ import com.epam.messenger.user.management.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserDao userDao;
+  @Autowired
+  private UserDao userDao;
 
-    @Override
-    public User get(Long id) {
-	return userDao.getOne(id);
-    }
+  @Override
+  public User get(Long id) {
+    return userDao.getOne(id);
+  }
 
-    @Override
-    public User save(User user) {
-	return userDao.save(user);
-    }
+  @Override
+  public User save(User user) {
+    return userDao.save(user);
+  }
 
 }

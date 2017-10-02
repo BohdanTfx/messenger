@@ -7,10 +7,10 @@ import lombok.Data;
 @Data
 public class MessageDTO {
 
-    private Long id;
-    private Date createDate;
-    private Date updateDate;
-    private String text;
-    private Long authorId;
-    private Long conversationId;
+  private Long id;
+  private Date createDate;
+  private Date updateDate;
+  private String text;
+  private Long authorId;
+  private Long conversationId;
 }

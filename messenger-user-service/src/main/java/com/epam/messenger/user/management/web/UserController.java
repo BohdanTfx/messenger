@@ -15,17 +15,17 @@ import com.epam.messenger.user.management.service.UserService;
 @RestController
 @RequestMapping("user")
 public class UserController {
-    
-    @Autowired
-    private UserService userService;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public User readMessage(@PathVariable Long id) {
-	return userService.get(id);
-    }
+  @Autowired
+  private UserService userService;
 
-    @RequestMapping(method = RequestMethod.POST)
-    public User saveMessage(@RequestBody UserDTO messageDTO) {
-	return userService.save(UserTransformer.toUser(messageDTO));
-    }
+  @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+  public User readMessage(@PathVariable Long id) {
+    return userService.get(id);
+  }
+
+  @RequestMapping(method = RequestMethod.POST)
+  public User saveMessage(@RequestBody UserDTO messageDTO) {
+    return userService.save(UserTransformer.toUser(messageDTO));
+  }
 }

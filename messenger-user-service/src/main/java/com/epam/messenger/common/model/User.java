@@ -14,12 +14,12 @@ import lombok.Data;
 @Data
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 177373347256449505L;
+  private static final long serialVersionUID = 177373347256449505L;
 
-    @Id
-    @GeneratedValue
-    private Long id;
-    private String firstName;
-    private String lastname;
+  @Id
+  @GeneratedValue
+  private Long id;
+  private String firstName;
+  private String lastname;
 
 }

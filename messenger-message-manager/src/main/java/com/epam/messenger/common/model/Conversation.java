@@ -12,10 +12,10 @@ import lombok.Data;
 @Document(collection = "Conversation")
 public class Conversation implements Serializable {
 
-    private static final long serialVersionUID = -775350535622500549L;
+  private static final long serialVersionUID = -775350535622500549L;
 
-    @Id
-    private Long id;
-    private Date createDate;
-    private Date updateDate;
+  @Id
+  private Long id;
+  private Date createDate;
+  private Date updateDate;
 }
