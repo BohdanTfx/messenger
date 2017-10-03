@@ -1,8 +1,10 @@
-server:
-  port: 8090
 spring:
+  application:
+    name: Message manager
   data:
     mongodb:
       host: localhost
       port: 27017
       database: messenger-message
+server:
+  port: 0
