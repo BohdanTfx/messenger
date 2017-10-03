@@ -5,9 +5,12 @@ import com.epam.messenger.common.model.User;
 
 public class UserTransformer {
 
-  public static User toUser(UserDTO messageDTO) {
-    // TODO Auto-generated method stub
-    return null;
+  public static User toUser(UserDTO userDTO) {
+    User user = new User();
+    user.setId(userDTO.getId());
+    user.setFirstName(userDTO.getFirstName());
+    user.setLastName(userDTO.getLastName());
+    return user;
   }
 
 }
