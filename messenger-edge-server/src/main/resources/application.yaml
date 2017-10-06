@@ -7,7 +7,8 @@ endpoints:
     enabled: true
   health:
     sensitive: false
-zuul:
-  ignoredServices: '*'
 server:
   port: 8765
+spring:
+  application:
+    name: Zuul Server
