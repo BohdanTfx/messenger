@@ -1,6 +1,6 @@
 spring:
   application:
-    name: Message manager
+    name: MessageManager
   data:
     mongodb:
       host: localhost
