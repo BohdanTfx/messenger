@@ -6,6 +6,6 @@ spring:
   application:
     name: FileManager
 server:
-  port: 9090
+  port: 0
 storage:
   location: D:\workspace\messenger-storage
