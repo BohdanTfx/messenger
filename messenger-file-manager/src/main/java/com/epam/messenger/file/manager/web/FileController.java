@@ -47,8 +47,9 @@ public class FileController {
   }
 
   @PostMapping
-  public void uploadFile(@RequestParam("file") MultipartFile file) {
-    storageService.store(file);
+  public Boolean uploadFile(@RequestParam List<MultipartFile> files) {
+    files.forEach(file -> storageService.store(file));
+    return true;
   }
 
 }

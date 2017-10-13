@@ -20,7 +20,8 @@ public class MessageServiceImpl implements MessageService {
 
   @Override
   public Message read(Long id) {
-    return messageDao.findOne(id);
+    Message message = messageDao.findOne(id);
+    return message;
   }
 
   @Override

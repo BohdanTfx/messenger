@@ -1,7 +1,9 @@
 package com.epam.messenger.common.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,5 +23,6 @@ public class Message implements Serializable {
   private String text;
   private Long authorId;
   private Conversation conversation;
+  private List<String> attachments = new ArrayList<>();
 
 }
