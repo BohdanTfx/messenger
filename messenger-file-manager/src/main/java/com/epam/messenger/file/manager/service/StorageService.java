@@ -8,9 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface StorageService {
 
-  void store(MultipartFile file);
+  void store(String groupId, MultipartFile file);
 
-  Stream<Path> loadAll();
+  Stream<Path> loadAll(String groupId);
 
   Path load(String filename);
 

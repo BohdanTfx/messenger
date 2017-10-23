@@ -23,36 +23,35 @@ import com.epam.messenger.file.manager.service.StorageService;
 @RequestMapping(value = "/files")
 public class FileController {
 
-  private final StorageService storageService;
-
   @Autowired
-  public FileController(StorageService storageService) {
-    this.storageService = storageService;
-  }
+  private StorageService storageService;
 
-  @GetMapping
-  public List<String> listFiles() throws IOException {
-    return storageService.loadAll()
+  @GetMapping("/{groupId}")
+  public List<String> listFiles(@PathVariable("groupId") Long groupId) throws IOException {
+    return storageService.loadAll(groupId.toString())
         .map(path -> MvcUriComponentsBuilder
-            .fromMethodName(FileController.class, "downloadFile", path.getFileName().toString()).build().toString())
+            .fromMethodName(FileController.class, "downloadFile", groupId, path.getFileName().toString()).build()
+            .toString())
         .collect(Collectors.toList());
   }
 
-  @GetMapping(value = "/{filename:.+}", headers = "returnType=File")
-  public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
-    Resource file = storageService.loadAsResource(filename);
+  @GetMapping("/{groupId}/{filename:.+}")
+  public ResponseEntity<Resource> downloadFile(@PathVariable("groupId") Long groupId,
+      @PathVariable("filename") String filename) {
+    Resource file = storageService.loadAsResource(groupId + "/" + filename);
     return ResponseEntity.ok()
         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
   }
 
-  @GetMapping(value = "/{filename:.+}", headers = "returnType=FileUrl")
-  public String getFileUrl(@PathVariable String filename) {
-    return MvcUriComponentsBuilder.fromMethodName(FileController.class, "downloadFile", filename).build().toString();
+  @GetMapping(value = "/{groupId}/{filename:.+}", headers = "returnType=FileUrl")
+  public String getFileUrl(@PathVariable("groupId") Long groupId, @PathVariable("filename") String filename) {
+    return MvcUriComponentsBuilder.fromMethodName(FileController.class, "downloadFile", groupId, filename).build()
+        .toString();
   }
 
-  @PostMapping
-  public Boolean uploadFile(@RequestParam("files") List<MultipartFile> files) {
-    files.forEach(file -> storageService.store(file));
+  @PostMapping("/{groupId}")
+  public Boolean uploadFile(@RequestParam("files") List<MultipartFile> files, @PathVariable("groupId") Long groupId) {
+    files.forEach(file -> storageService.store(groupId.toString(), file));
     return true;
   }
 

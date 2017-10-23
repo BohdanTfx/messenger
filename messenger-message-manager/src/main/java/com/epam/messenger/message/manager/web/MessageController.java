@@ -1,7 +1,6 @@
 package com.epam.messenger.message.manager.web;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +28,7 @@ import com.epam.messenger.common.util.MessageTransformer;
 import com.epam.messenger.message.manager.service.MessageService;
 import com.epam.messenger.message.manager.util.FileConverter;
 import com.epam.messenger.message.manager.util.ServiceURLProvider;
+import com.epam.messenger.message.manager.web.client.FileManagerClient;
 
 @RestController
 @RequestMapping("message")
@@ -36,40 +36,44 @@ public class MessageController {
 
   @Autowired
   private MessageService messageService;
+  @Autowired
+  private FileManagerClient fileManagerClient;
 
   private RestTemplate restTemplate = new RestTemplate();
 
   @GetMapping("/{id}")
   public Message readMessage(@PathVariable Long id) {
-    return messageService.read(id);
+    Message message = messageService.read(id);
+    message.setAttachments(fileManagerClient.listFiles(message.getId()));
+    return message;
   }
 
   @PostMapping
   public Message saveMessage(CreateMessageDTO messageDTO, @RequestParam(required = false) List<MultipartFile> files) {
     Message message = MessageTransformer.toMessage(messageDTO);
-    message.setAttachments(saveAttachments(files));
-    return messageService.save(message);
+    message.setAttachments(files.stream().map(file -> file.getOriginalFilename()).collect(Collectors.toList()));
+    message = messageService.save(message);
+    saveAttachments(message.getId(), files);
+    return message;
   }
 
-  private List<String> saveAttachments(List<MultipartFile> files) {
+  private void saveAttachments(Long messageId, List<MultipartFile> files) {
     if (files == null || files.isEmpty()) {
-      return Collections.emptyList();
+      return;
     }
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.MULTIPART_FORM_DATA);
     MultiValueMap<String, Object> parts = new LinkedMultiValueMap<String, Object>();
 
-    List<String> attachments = files.stream().map(file -> {
+    files.forEach(file -> {
       try {
         parts.add("files", new FileSystemResource(FileConverter.convert(file)));
       } catch (IOException e) {
         e.printStackTrace();
       }
-      return file.getOriginalFilename();
-    }).collect(Collectors.toList());
+    });
 
-    restTemplate.exchange(ServiceURLProvider.getURL(Service.FILE_MANAGER) + "/files", HttpMethod.POST,
+    restTemplate.exchange(ServiceURLProvider.getURL(Service.FILE_MANAGER) + "/files/" + messageId, HttpMethod.POST,
         new HttpEntity<MultiValueMap<String, Object>>(parts, headers), Boolean.class);
-    return attachments;
   }
 }

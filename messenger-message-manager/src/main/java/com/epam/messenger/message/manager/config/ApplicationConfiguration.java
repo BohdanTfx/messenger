@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,7 @@ import com.epam.messenger.common.model.Message;
 import com.epam.messenger.message.manager.dao.MessageDao;
 import com.epam.messenger.message.manager.util.FileConverter;
 import com.epam.messenger.message.manager.web.MessageController;
+import com.epam.messenger.message.manager.web.client.FileManagerClient;
 
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -29,6 +31,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 @EntityScan(basePackageClasses = Message.class)
 @EnableAutoConfiguration
 @EnableScheduling
+@EnableFeignClients(basePackageClasses = FileManagerClient.class)
 public class ApplicationConfiguration {
   private static Logger LOG = LoggerFactory.getLogger(ApplicationConfiguration.class);
 

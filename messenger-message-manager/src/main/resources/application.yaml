@@ -8,3 +8,6 @@ spring:
       database: messenger-message
 server:
   port: 0
+clients:
+  filemanager:
+    url: http://localhost:8765/filemanager
