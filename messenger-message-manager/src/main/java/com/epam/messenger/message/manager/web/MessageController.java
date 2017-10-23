@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.epam.messenger.common.dto.CreateMessageDTO;
 import com.epam.messenger.common.model.Message;
 import com.epam.messenger.common.model.enums.Service;
-import com.epam.messenger.common.util.MessageTransformer;
+import com.epam.messenger.common.util.ModelTransformer;
 import com.epam.messenger.message.manager.service.MessageService;
 import com.epam.messenger.message.manager.util.FileConverter;
 import com.epam.messenger.message.manager.util.ServiceURLProvider;
@@ -50,7 +50,7 @@ public class MessageController {
 
   @PostMapping
   public Message saveMessage(CreateMessageDTO messageDTO, @RequestParam(required = false) List<MultipartFile> files) {
-    Message message = MessageTransformer.toMessage(messageDTO);
+    Message message = ModelTransformer.toMessage(messageDTO);
     message.setAttachments(files.stream().map(file -> file.getOriginalFilename()).collect(Collectors.toList()));
     message = messageService.save(message);
     saveAttachments(message.getId(), files);

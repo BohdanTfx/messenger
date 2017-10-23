@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Message implements Serializable {
   private Date updateDate;
   private String text;
   private Long authorId;
+  @DBRef
   private Conversation conversation;
   private List<String> attachments = new ArrayList<>();
 
