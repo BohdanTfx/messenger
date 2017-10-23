@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -26,20 +24,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.epam.messenger.common.dto.CreateMessageDTO;
 import com.epam.messenger.common.model.Message;
+import com.epam.messenger.common.model.enums.Service;
 import com.epam.messenger.common.util.MessageTransformer;
 import com.epam.messenger.message.manager.service.MessageService;
 import com.epam.messenger.message.manager.util.FileConverter;
+import com.epam.messenger.message.manager.util.ServiceURLProvider;
 
 @RestController
 @RequestMapping("message")
 public class MessageController {
 
-  private static final String FILE_MANAGER = "FileManager";
-
   @Autowired
   private MessageService messageService;
-  @Autowired
-  private LoadBalancerClient loadBalancer;
 
   private RestTemplate restTemplate = new RestTemplate();
 
@@ -49,14 +45,13 @@ public class MessageController {
   }
 
   @PostMapping
-  public Message saveMessage(CreateMessageDTO messageDTO, @RequestParam(required = false) List<MultipartFile> files)
-      throws IOException {
+  public Message saveMessage(CreateMessageDTO messageDTO, @RequestParam(required = false) List<MultipartFile> files) {
     Message message = MessageTransformer.toMessage(messageDTO);
     message.setAttachments(saveAttachments(files));
     return messageService.save(message);
   }
 
-  private List<String> saveAttachments(List<MultipartFile> files) throws IOException {
+  private List<String> saveAttachments(List<MultipartFile> files) {
     if (files == null || files.isEmpty()) {
       return Collections.emptyList();
     }
@@ -73,11 +68,8 @@ public class MessageController {
       return file.getOriginalFilename();
     }).collect(Collectors.toList());
 
-    ServiceInstance instance = loadBalancer.choose(FILE_MANAGER);
-    restTemplate.exchange(instance.getUri() + "/files", HttpMethod.POST,
+    restTemplate.exchange(ServiceURLProvider.getURL(Service.FILE_MANAGER) + "/files", HttpMethod.POST,
         new HttpEntity<MultiValueMap<String, Object>>(parts, headers), Boolean.class);
-
-    FileConverter.clearTempStorage();
     return attachments;
   }
 }

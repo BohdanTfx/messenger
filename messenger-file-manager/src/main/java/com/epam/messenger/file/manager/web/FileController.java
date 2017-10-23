@@ -38,11 +38,16 @@ public class FileController {
         .collect(Collectors.toList());
   }
 
-  @GetMapping("/{filename:.+}")
+  @GetMapping(value = "/{filename:.+}", headers = "returnType=File")
   public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
     Resource file = storageService.loadAsResource(filename);
     return ResponseEntity.ok()
         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+  }
+
+  @GetMapping(value = "/{filename:.+}", headers = "returnType=FileUrl")
+  public String getFileUrl(@PathVariable String filename) {
+    return MvcUriComponentsBuilder.fromMethodName(FileController.class, "downloadFile", filename).build().toString();
   }
 
   @PostMapping
