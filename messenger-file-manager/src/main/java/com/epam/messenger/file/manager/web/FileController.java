@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +31,7 @@ public class FileController {
   }
 
   @GetMapping
-  public List<String> listFiles(Model model) throws IOException {
+  public List<String> listFiles() throws IOException {
     return storageService.loadAll()
         .map(path -> MvcUriComponentsBuilder
             .fromMethodName(FileController.class, "downloadFile", path.getFileName().toString()).build().toString())
@@ -47,7 +46,7 @@ public class FileController {
   }
 
   @PostMapping
-  public Boolean uploadFile(@RequestParam List<MultipartFile> files) {
+  public Boolean uploadFile(@RequestParam("files") List<MultipartFile> files) {
     files.forEach(file -> storageService.store(file));
     return true;
   }
