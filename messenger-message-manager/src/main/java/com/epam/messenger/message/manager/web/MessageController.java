@@ -1,6 +1,7 @@
 package com.epam.messenger.message.manager.web;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,7 +44,10 @@ public class MessageController {
   private RestTemplate restTemplate = new RestTemplate();
 
   @GetMapping("/{id}")
-  public Message readMessage(@PathVariable Long id) {
+  public Message readMessage(@PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationHeader,
+      Principal currentUser) {
+
+    System.out.println("ProductApi: User=" + currentUser.getName() + ", Auth=" + authorizationHeader);
     Message message = messageService.read(id);
     message.setAttachments(fileManagerClient.listFiles(message.getId()));
     return message;

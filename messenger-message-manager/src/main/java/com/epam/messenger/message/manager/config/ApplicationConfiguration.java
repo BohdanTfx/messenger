@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.cloud.security.oauth2.resource.EnableOAuth2Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +33,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 @EnableAutoConfiguration
 @EnableScheduling
 @EnableFeignClients(basePackageClasses = FileManagerClient.class)
+@EnableOAuth2Resource
 public class ApplicationConfiguration {
   private static Logger LOG = LoggerFactory.getLogger(ApplicationConfiguration.class);
 
